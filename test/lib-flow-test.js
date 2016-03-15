@@ -133,5 +133,15 @@ describe('Flow Library', function () {
                 expect(error).to.not.be.null;
             });
         });
+        it('Should execute callback with values in right order', function () {
+            flow.map([1, 2, 3], function (value, next) {
+                setTimeout(function () {
+                    next(null, value + 3);
+                }, 3000 / value);
+            }, function (error, data) {
+                console.log('hey');
+                expect(data).to.be.deep.equal([4, 7, 6]);
+            });
+        });
     });
 });
